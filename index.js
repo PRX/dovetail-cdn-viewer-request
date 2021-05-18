@@ -1,5 +1,5 @@
 function handler(event) {
-  var DOVETAIL_HOST = 'https://dovetail.prxu.org/_';
+  var DOVETAIL_HOST = '<REPLACE_DOVETAIL_HOST>';
   var request = event.request || {};
   var querystring = request.querystring || {};
   var uri = request.uri || '';

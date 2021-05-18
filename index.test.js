@@ -1,4 +1,8 @@
-eval(require('fs').readFileSync('./index.js').toString());
+const fs = require('fs');
+const txt = fs.readFileSync('./index.js').toString();
+
+// functions aren't actually exported, so just replace templates and eval
+eval(txt.replace('<REPLACE_DOVETAIL_HOST>', 'https://dovetail.test'));
 
 describe('handler', () => {
   function event(uri = '', querystring = {}) {
@@ -51,13 +55,13 @@ describe('handler', () => {
     const event1 = event('/1234/some-guid/some-digest/file.mp3', { exp });
     expect(handler(event1).statusCode).toEqual(302);
     expect(handler(event1).headers.location.value).toEqual(
-      'https://dovetail.prxu.org/_/1234/some-guid/file.mp3',
+      'https://dovetail.test/1234/some-guid/file.mp3',
     );
 
     const event2 = event('/1234/adfree/some-guid/some-digest/file.mp3', { exp });
     expect(handler(event2).statusCode).toEqual(302);
     expect(handler(event2).headers.location.value).toEqual(
-      'https://dovetail.prxu.org/_/1234/adfree/some-guid/file.mp3',
+      'https://dovetail.test/1234/adfree/some-guid/file.mp3',
     );
   });
 
