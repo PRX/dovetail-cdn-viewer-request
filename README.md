@@ -1,2 +1,3 @@
 # dovetail-cdn-viewer-request
-Viewer request edge lambda for the Dovetail CDN
+
+Viewer request cloudfront function for the Dovetail CDN
