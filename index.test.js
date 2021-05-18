@@ -2,7 +2,7 @@ const fs = require('fs');
 const txt = fs.readFileSync('./index.js').toString();
 
 // functions aren't actually exported, so just replace templates and eval
-eval(txt.replace('<REPLACE_DOVETAIL_HOST>', 'https://dovetail.test'));
+eval(txt.replace('<EXPIRED_REDIRECT_PREFIX>', 'https://dovetail.test'));
 
 describe('handler', () => {
   function event(uri = '', querystring = {}) {

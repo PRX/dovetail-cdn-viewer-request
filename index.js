@@ -1,5 +1,5 @@
 function handler(event) {
-  var DOVETAIL_HOST = '<REPLACE_DOVETAIL_HOST>';
+  var EXPIRED_REDIRECT_PREFIX = '<EXPIRED_REDIRECT_PREFIX>';
   var request = event.request || {};
   var querystring = request.querystring || {};
   var uri = request.uri || '';
@@ -22,7 +22,7 @@ function handler(event) {
     var now = Math.round(Date.now() / 1000);
     if (now > parseInt(querystring.exp.value, 10)) {
       parts.splice(-2, 1); // digest is always 2nd to last
-      var headers = { location: { value: `${DOVETAIL_HOST}/${parts.join('/')}` } };
+      var headers = { location: { value: `${EXPIRED_REDIRECT_PREFIX}/${parts.join('/')}` } };
       return { headers, statusCode: 302, statusDescription: 'Arrangement expired' };
     }
   }
