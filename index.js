@@ -27,8 +27,7 @@ function handler(event) {
     }
   }
 
-  // TODO: check/require a signature query param (signing your path/exp/le)
-  // TODO: some sort of ?force requests to re-stitch (maybe add a uuid to uri?)
+  // TODO: check/require a signature query param (signing your path/exp/le/force)
 
   // normalize stitch requests to /<podcast_id>/<episode_guid>/<digest>
   if (parts.length === 5) {
@@ -36,6 +35,12 @@ function handler(event) {
   }
   parts.splice(-1, 1);
   request.uri = '/' + parts.join('/');
+
+  // force restitching the arrangement by adding a random string to the url
+  // TODO: REAAAALLY need to sign/secret this one somehow
+  if (querystring.force) {
+    request.uri += `/force-${Date.now()}`;
+  }
 
   return request;
 }

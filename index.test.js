@@ -76,4 +76,14 @@ describe('handler', () => {
     const result2 = handler(JSON.parse(JSON.stringify(event2)));
     expect(result2.uri).toEqual('/1234/some-guid/some-digest');
   });
+
+  it('forces cache-misses and restitching the arrangement', async () => {
+    const exp = { value: now + 10 };
+    const force = { value: '1' };
+
+    const event1 = event('/1234/some-guid/some-digest/file.mp3', { exp, force });
+    const result1 = handler(JSON.parse(JSON.stringify(event1)));
+    expect(result1.uri).toMatch('/1234/some-guid/some-digest/force-');
+    expect(result1.uri).toMatch(/force-[0-9]+/);
+  });
 });
