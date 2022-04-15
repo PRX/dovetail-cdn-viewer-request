@@ -9,10 +9,16 @@ function handler(event) {
     return request;
   }
 
+  // paths can optionally start with a region name, for logging purposes. but
+  // we can just remove it here.
+  var parts = uri.split('/').filter(p => p);
+  if (parts[0].match(/^[a-z]{2}-[a-z\-]+-[0-9]{1}$/)) {
+    parts.shift();
+  }
+
   // just kick out invalid looking paths
   // either: /podcast_id/episode_guid/digest/filename.mp3
   //     or: /podcast_id/feed_id/episode_guid/digest/filename.mp3
-  var parts = uri.split('/').filter(p => p);
   if (parts.length !== 4 && parts.length !== 5) {
     return { statusCode: 404, statusDescription: 'Not found. Like, ever.' };
   }
