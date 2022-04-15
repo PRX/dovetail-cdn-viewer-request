@@ -46,6 +46,10 @@ from a non-default feed (such as "adfree"):
 "uri": "/<podcast_id>/<feed_id>/<episode_guid>/<arrangement_digest>/filename.mp3"
 ```
 
+AND the `uri` may also also optionally include an `<aws_region>` token, to indicate
+which region the Dovetail Router redirect originated from. This will tie the
+CloudFront behavior + realtime-logs to that region, for analytics processing.
+
 The `exp` is a (currently optional) epoch seconds timestamp, when this url will
 no longer be valid and must be redirected back for a newer arrangement.
 
