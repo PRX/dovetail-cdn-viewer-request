@@ -28,7 +28,14 @@ function handler(event) {
     var now = Math.round(Date.now() / 1000);
     if (now > parseInt(querystring.exp.value, 10)) {
       parts.splice(-2, 1); // digest is always 2nd to last
-      var headers = { location: { value: `${EXPIRED_REDIRECT_PREFIX}/${parts.join('/')}` } };
+      var value = `${EXPIRED_REDIRECT_PREFIX}/${parts.join('/')}`;
+
+      // preserve token auth, for private feed enclosures
+      if (querystring.auth && querystring.auth.value) {
+        value += `?auth=${querystring.auth.value}`;
+      }
+
+      var headers = { location: { value } };
       return { headers, statusCode: 302, statusDescription: 'Arrangement expired' };
     }
   }

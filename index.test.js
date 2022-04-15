@@ -89,6 +89,17 @@ describe('handler', () => {
     );
   });
 
+  it('preserves auth on expired links', async () => {
+    const exp = { value: now - 10 };
+    const auth = { value: 'my-auth-token' };
+
+    const event1 = event('/1234/adfree/some-guid/some-digest/file.mp3', { exp, auth });
+    expect(handler(event1).statusCode).toEqual(302);
+    expect(handler(event1).headers.location.value).toEqual(
+      'https://dovetail.test/1234/adfree/some-guid/file.mp3?auth=my-auth-token',
+    );
+  });
+
   it('removes filenames, feed-ids, and regions from uris', async () => {
     const exp = { value: now + 10 };
 
