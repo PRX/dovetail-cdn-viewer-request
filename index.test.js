@@ -38,10 +38,10 @@ describe('handler', () => {
     const event2 = event('/1234/adfree/some-guid/some-digest/file.mp3');
     expect(handler(event2)).toEqual(event2.request);
 
-    const event3 = event('/us-east-1/1234/some-guid/some-digest/file.mp3');
+    const event3 = event('/use1-whatev/1234/some-guid/some-digest/file.mp3');
     expect(handler(event3)).toEqual(event3.request);
 
-    const event4 = event('/us-east-1/1234/adfree/some-guid/some-digest/file.mp3');
+    const event4 = event('/use1-whatev/1234/adfree/some-guid/some-digest/file.mp3');
     expect(handler(event4)).toEqual(event4.request);
   });
 
@@ -54,10 +54,10 @@ describe('handler', () => {
     const event2 = event('/1234/adfree/some-guid/some-digest/file.mp3', { exp });
     expect(handler(event2)).toEqual(event2.request);
 
-    const event3 = event('/us-east-1/1234/some-guid/some-digest/file.mp3', { exp });
+    const event3 = event('/use1-whatev/1234/some-guid/some-digest/file.mp3', { exp });
     expect(handler(event3)).toEqual(event3.request);
 
-    const event4 = event('/us-east-1/1234/adfree/some-guid/some-digest/file.mp3', { exp });
+    const event4 = event('/use1-whatev/1234/adfree/some-guid/some-digest/file.mp3', { exp });
     expect(handler(event4)).toEqual(event4.request);
   });
 
@@ -76,13 +76,13 @@ describe('handler', () => {
       'https://dovetail.test/1234/adfree/some-guid/file.mp3',
     );
 
-    const event3 = event('/us-east-1/1234/some-guid/some-digest/file.mp3', { exp });
+    const event3 = event('/use1-whatev/1234/some-guid/some-digest/file.mp3', { exp });
     expect(handler(event3).statusCode).toEqual(302);
     expect(handler(event3).headers.location.value).toEqual(
       'https://dovetail.test/1234/some-guid/file.mp3',
     );
 
-    const event4 = event('/us-east-1/1234/adfree/some-guid/some-digest/file.mp3', { exp });
+    const event4 = event('/use1-whatev/1234/adfree/some-guid/some-digest/file.mp3', { exp });
     expect(handler(event4).statusCode).toEqual(302);
     expect(handler(event4).headers.location.value).toEqual(
       'https://dovetail.test/1234/adfree/some-guid/file.mp3',
@@ -111,11 +111,11 @@ describe('handler', () => {
     const result2 = handler(JSON.parse(JSON.stringify(event2)));
     expect(result2.uri).toEqual('/1234/some-guid/some-digest');
 
-    const event3 = event('/us-east-1/1234/some-guid/some-digest/file.mp3', { exp });
+    const event3 = event('/use1-whatev/1234/some-guid/some-digest/file.mp3', { exp });
     const result3 = handler(JSON.parse(JSON.stringify(event3)));
     expect(result3.uri).toEqual('/1234/some-guid/some-digest');
 
-    const event4 = event('/us-east-1/1234/adfree/some-guid/some-digest/file.mp3', { exp });
+    const event4 = event('/use1-whatev/1234/adfree/some-guid/some-digest/file.mp3', { exp });
     const result4 = handler(JSON.parse(JSON.stringify(event4)));
     expect(result4.uri).toEqual('/1234/some-guid/some-digest');
   });

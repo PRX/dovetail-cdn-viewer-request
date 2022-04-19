@@ -9,10 +9,10 @@ function handler(event) {
     return request;
   }
 
-  // paths can optionally start with a region name, for logging purposes. but
-  // we can just remove it here.
+  // paths can optionally start with an extra string token, specifying which
+  // CloudFront Behavior/Realtime-logs to use. must start with a character.
   var parts = uri.split('/').filter(p => p);
-  if (parts[0].match(/^[a-z]{2}-[a-z\-]+-[0-9]{1}$/)) {
+  if (parts[0].match(/^[a-z][a-z0-9\-]+$/)) {
     parts.shift();
   }
 
