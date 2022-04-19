@@ -9,10 +9,16 @@ function handler(event) {
     return request;
   }
 
+  // paths can optionally start with an extra string token, specifying which
+  // CloudFront Behavior/Realtime-logs to use. must start with a character.
+  var parts = uri.split('/').filter(p => p);
+  if (parts[0].match(/^[a-z][a-z0-9\-]+$/)) {
+    parts.shift();
+  }
+
   // just kick out invalid looking paths
   // either: /podcast_id/episode_guid/digest/filename.mp3
   //     or: /podcast_id/feed_id/episode_guid/digest/filename.mp3
-  var parts = uri.split('/').filter(p => p);
   if (parts.length !== 4 && parts.length !== 5) {
     return { statusCode: 404, statusDescription: 'Not found. Like, ever.' };
   }
@@ -22,7 +28,14 @@ function handler(event) {
     var now = Math.round(Date.now() / 1000);
     if (now > parseInt(querystring.exp.value, 10)) {
       parts.splice(-2, 1); // digest is always 2nd to last
-      var headers = { location: { value: `${EXPIRED_REDIRECT_PREFIX}/${parts.join('/')}` } };
+      var value = `${EXPIRED_REDIRECT_PREFIX}/${parts.join('/')}`;
+
+      // preserve token auth, for private feed enclosures
+      if (querystring.auth && querystring.auth.value) {
+        value += `?auth=${querystring.auth.value}`;
+      }
+
+      var headers = { location: { value } };
       return { headers, statusCode: 302, statusDescription: 'Arrangement expired' };
     }
   }
