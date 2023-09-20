@@ -42,7 +42,7 @@ function handler(event) {
 
   // TODO: check/require a signature query param (signing your path/exp/le/force)
   // TEMPORARY: just kick out short/fake looking digests (2nd to last)
-  const digest = parts[parts.length - 2];
+  var digest = parts[parts.length - 2];
   if (digest.length < 20 && digest !== 'some-digest') {
     return { statusCode: 404, statusDescription: 'Not found. Like, ever.' };
   }
