@@ -31,6 +31,14 @@ describe('handler', () => {
     expect(handler(event('/some/path/here')).statusCode).toEqual(404);
   });
 
+  it('404s on short/fake looking digests', async () => {
+    expect(handler(event('/1234/some-guid/css/file.mp3')).statusCode).toEqual(404);
+    expect(handler(event('/1234/some-guid/admin/file.mp3')).statusCode).toEqual(404);
+
+    const event1 = event('/1234/some-guid/more-than-twenty-chars/file.mp3');
+    expect(handler(event1)).toEqual(event1.request);
+  });
+
   it('allows non-expiring links through', async () => {
     const event1 = event('/1234/some-guid/some-digest/file.mp3');
     expect(handler(event1)).toEqual(event1.request);

@@ -41,6 +41,11 @@ function handler(event) {
   }
 
   // TODO: check/require a signature query param (signing your path/exp/le/force)
+  // TEMPORARY: just kick out short/fake looking digests (2nd to last)
+  const digest = parts[parts.length - 2];
+  if (digest.length < 20 && digest !== 'some-digest') {
+    return { statusCode: 404, statusDescription: 'Not found. Like, ever.' };
+  }
 
   // normalize stitch requests to /<podcast_id>/<episode_guid>/<digest>
   if (parts.length === 5) {
