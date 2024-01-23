@@ -2,7 +2,7 @@
   "name": "dovetail-cdn-viewer-request",
   "version": "0.0.0",
   "engines": {
-    "node": ">= 14.0.0"
+    "node": ">= 20.0.0"
   },
   "description": "Viewer request cloudfront function for the Dovetail CDN",
   "main": "index.js",
