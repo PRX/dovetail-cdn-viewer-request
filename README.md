@@ -6,8 +6,6 @@ to verify and normalize all requests to the [Dovetail 3 CDN](https://github.com/
 This function is tied to the CloudFront `viewer-request` event, verifies the
 request, redirects old/expired urls, and normalizes the requested paths.
 
-This project follows the [standards for PRX services](https://github.com/PRX/docs.prx.org/blob/master/team/Project-Standards.md#services).
-
 ![image](https://user-images.githubusercontent.com/1410587/121265887-cb73eb80-c876-11eb-8cd8-7292da09208c.png)
 
 ## Configuration
