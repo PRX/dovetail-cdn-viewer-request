@@ -1,3 +1,5 @@
+/*eslint-env node,es2022 */
+
 const fs = require('fs');
 const txt = fs.readFileSync('./index.js').toString();
 
