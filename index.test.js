@@ -77,25 +77,25 @@ describe('handler', () => {
     const event1 = event('/1234/some-guid/some-digest/file.mp3', { exp });
     expect(handler(event1).statusCode).toEqual(302);
     expect(handler(event1).headers.location.value).toEqual(
-      'https://dovetail.test/1234/some-guid/file.mp3',
+      'https://dovetail.test/1234/some-guid/file.mp3'
     );
 
     const event2 = event('/1234/adfree/some-guid/some-digest/file.mp3', { exp });
     expect(handler(event2).statusCode).toEqual(302);
     expect(handler(event2).headers.location.value).toEqual(
-      'https://dovetail.test/1234/adfree/some-guid/file.mp3',
+      'https://dovetail.test/1234/adfree/some-guid/file.mp3'
     );
 
     const event3 = event('/use1-whatev/1234/some-guid/some-digest/file.mp3', { exp });
     expect(handler(event3).statusCode).toEqual(302);
     expect(handler(event3).headers.location.value).toEqual(
-      'https://dovetail.test/1234/some-guid/file.mp3',
+      'https://dovetail.test/1234/some-guid/file.mp3'
     );
 
     const event4 = event('/use1-whatev/1234/adfree/some-guid/some-digest/file.mp3', { exp });
     expect(handler(event4).statusCode).toEqual(302);
     expect(handler(event4).headers.location.value).toEqual(
-      'https://dovetail.test/1234/adfree/some-guid/file.mp3',
+      'https://dovetail.test/1234/adfree/some-guid/file.mp3'
     );
   });
 
@@ -106,7 +106,7 @@ describe('handler', () => {
     const event1 = event('/1234/adfree/some-guid/some-digest/file.mp3', { exp, auth });
     expect(handler(event1).statusCode).toEqual(302);
     expect(handler(event1).headers.location.value).toEqual(
-      'https://dovetail.test/1234/adfree/some-guid/file.mp3?auth=my-auth-token',
+      'https://dovetail.test/1234/adfree/some-guid/file.mp3?auth=my-auth-token'
     );
   });
 
