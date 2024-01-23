@@ -1,7 +1,7 @@
 {
   "printWidth": 100,
   "semi": true,
-  "trailingComma": "all",
+  "trailingComma": "none",
   "useTabs": false,
   "endOfLine": "lf",
   "singleQuote": true,
