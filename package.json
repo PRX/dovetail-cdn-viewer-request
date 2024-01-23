@@ -2,7 +2,7 @@
   "name": "dovetail-cdn-viewer-request",
   "version": "0.0.0",
   "engines": {
-    "node": ">= 14.0.0"
+    "node": ">= 20.0.0"
   },
   "description": "Viewer request cloudfront function for the Dovetail CDN",
   "main": "index.js",
@@ -13,10 +13,16 @@
   },
   "repository": "https://github.com/PRX/dovetail-cdn-viewer-request",
   "author": "ryan cavis <ryan@prx.org>",
-  "license": "GPL-3.0-only",
+  "license": "AGPL-3.0",
   "private": true,
   "devDependencies": {
+    "@types/jest": "*",
+    "eslint": "*",
+    "eslint-config-prettier": "*",
+    "eslint-plugin-jest": "*",
+    "eslint-plugin-prettier": "*",
     "jest": "^26.6.3",
-    "prettier": "^2.3.0"
+    "prettier": "^3.2.4",
+    "typescript": "*"
   }
 }
