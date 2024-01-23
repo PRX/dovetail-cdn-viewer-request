@@ -1,7 +1,7 @@
 # Dovetail CDN Viewer Request
 
 [CloudFront Function](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cloudfront-functions.html)
-to verify and normalize all requests to the [Dovetail 3 CDN](https://github.com/PRX/Infrastructure/blob/master/cdn/dovetail3-cdn.yml).
+to verify and normalize all requests to the [Dovetail CDN](https://github.com/PRX/Infrastructure/tree/main/cdn/dovetail-cdn).
 
 This function is tied to the CloudFront `viewer-request` event, verifies the
 request, redirects old/expired urls, and normalizes the requested paths.
@@ -11,7 +11,7 @@ request, redirects old/expired urls, and normalizes the requested paths.
 ## Configuration
 
 As this is a CloudFront Function, you must hardcode everything instead of any
-configurations. That said, we use a [Custom::CodeFetcher](https://github.com/PRX/Infrastructure/blob/master/cdn/dovetail3-cdn.yml) and a bit of python in CloudFormation to replace values at deploy time.
+configurations. That said, we use a [Custom::CodeFetcher](https://github.com/PRX/Infrastructure/tree/main/cdn/dovetail-cdn) and a bit of python in CloudFormation to replace values at deploy time.
 
 - `<EXPIRED_REDIRECT_PREFIX>` - the scheme, domain, and optional path to
   redirect requests back to if your url `?exp=` is expired.
