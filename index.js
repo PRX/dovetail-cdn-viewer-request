@@ -17,9 +17,16 @@ function handler(event) {
   }
 
   // just kick out invalid looking paths
-  // either: /podcast_id/episode_guid/digest/filename.mp3
-  //     or: /podcast_id/feed_id/episode_guid/digest/filename.mp3
-  if (parts.length !== 4 && parts.length !== 5) {
+
+  // /podcast_id/episode_guid/digest/filename.mp3
+  // /podcast_id/feed_id/episode_guid/digest/filename.mp3
+  // /t/a/path/<file>/<format>.<extension>
+  // /t/<host>/[<path>/]<file>/<format>.<extension>
+  if (parts[0] === 't') {
+    if (parts.length < 4) {
+      return { statusCode: 404, statusDescription: 'Not found. Nope.' };
+    }
+  } else if (parts.length !== 4 && parts.length !== 5) {
     return { statusCode: 404, statusDescription: 'Not found. Like, ever.' };
   }
 
@@ -42,22 +49,24 @@ function handler(event) {
 
   // TODO: check/require a signature query param (signing your path/exp/le/force)
   // TEMPORARY: just kick out short/fake looking digests (2nd to last)
-  var digest = parts[parts.length - 2];
-  if (digest.length < 20 && digest !== 'some-digest') {
-    return { statusCode: 404, statusDescription: 'Not found. Like, ever.' };
-  }
+  if (parts[0] !== 't') {
+    var digest = parts[parts.length - 2];
+    if (digest.length < 20 && digest !== 'some-digest') {
+      return { statusCode: 404, statusDescription: 'Not found. Like, what?' };
+    }
 
-  // normalize stitch requests to /<podcast_id>/<episode_guid>/<digest>
-  if (parts.length === 5) {
-    parts.splice(1, 1);
-  }
-  parts.splice(-1, 1);
-  request.uri = '/' + parts.join('/');
+    // normalize stitch requests to /<podcast_id>/<episode_guid>/<digest>
+    if (parts.length === 5) {
+      parts.splice(1, 1);
+    }
+    parts.splice(-1, 1);
+    request.uri = '/' + parts.join('/');
 
-  // force restitching the arrangement by adding a random string to the url
-  // TODO: REAAAALLY need to sign/secret this one somehow
-  if (querystring.force) {
-    request.uri += `/force-${Date.now()}`;
+    // force restitching the arrangement by adding a random string to the url
+    // TODO: REAAAALLY need to sign/secret this one somehow
+    if (querystring.force) {
+      request.uri += `/force-${Date.now()}`;
+    }
   }
 
   return request;
