@@ -31,9 +31,6 @@ describe('handler', () => {
     expect(handler(event('/some')).statusCode).toEqual(404);
     expect(handler(event('/some/path')).statusCode).toEqual(404);
     expect(handler(event('/some/path/here')).statusCode).toEqual(404);
-    expect(handler(event('/t')).statusCode).toEqual(404);
-    expect(handler(event('/t/path')).statusCode).toEqual(404);
-    expect(handler(event('/t/some/path')).statusCode).toEqual(404);
   });
 
   it('404s on short/fake looking digests', async () => {
@@ -44,7 +41,7 @@ describe('handler', () => {
     expect(handler(event1)).toEqual(event1.request);
   });
 
-  it('allows non-expiring links through', async () => {
+  it('allows non-expiring digest links through', async () => {
     const event1 = event('/1234/some-guid/some-digest/file.mp3');
     expect(handler(event1)).toEqual(event1.request);
 
@@ -56,18 +53,6 @@ describe('handler', () => {
 
     const event4 = event('/use1-whatev/1234/adfree/some-guid/some-digest/file.mp3');
     expect(handler(event4)).toEqual(event4.request);
-
-    const event5 = event('/t/some.domain.com/test.wav/72.1.16000.m4a');
-    expect(handler(event5)).toEqual(event5.request);
-
-    const event6 = event('/t/a/up/guid1/test.wav/72.1.16000.m4a');
-    expect(handler(event6)).toEqual(event6.request);
-
-    const event7 = event('/t/a/up/p1/p2/guid1/test.wav/72.1.16000.m4a');
-    expect(handler(event7)).toEqual(event7.request);
-
-    const event8 = event('/t/some.com/p1/p2/p3/p4/test.wav/72.1.16000.m4a');
-    expect(handler(event8)).toEqual(event8.request);
   });
 
   it('allows non-expired links through', async () => {
@@ -153,5 +138,25 @@ describe('handler', () => {
     const result1 = handler(JSON.parse(JSON.stringify(event1)));
     expect(result1.uri).toMatch('/1234/some-guid/some-digest/force-');
     expect(result1.uri).toMatch(/force-[0-9]+/);
+  });
+
+  it('404s on bad looking transcode paths', async () => {
+    expect(handler(event('/t')).statusCode).toEqual(404);
+    expect(handler(event('/t/path')).statusCode).toEqual(404);
+    expect(handler(event('/t/some/path')).statusCode).toEqual(404);
+  });
+
+  it('allows transcode links through', async () => {
+    const event5 = event('/t/some.domain.com/test.wav/72.1.16000.m4a');
+    expect(handler(event5)).toEqual(event5.request);
+
+    const event6 = event('/t/a/up/guid1/test.wav/72.1.16000.m4a');
+    expect(handler(event6)).toEqual(event6.request);
+
+    const event7 = event('/t/a/up/p1/p2/guid1/test.wav/72.1.16000.m4a');
+    expect(handler(event7)).toEqual(event7.request);
+
+    const event8 = event('/t/some.com/p1/p2/p3/p4/test.wav/72.1.16000.m4a');
+    expect(handler(event8)).toEqual(event8.request);
   });
 });
