@@ -147,16 +147,16 @@ describe('handler', () => {
   });
 
   it('allows transcode links through', async () => {
-    const event5 = event('/t/some.domain.com/test.wav/72.1.16000.m4a');
+    const event5 = event('/t/some.domain.com/test.wav/72.1.16000.mp4');
     expect(handler(event5)).toEqual(event5.request);
 
-    const event6 = event('/t/a/up/guid1/test.wav/72.1.16000.m4a');
+    const event6 = event('/t/a/up/guid1/test.wav/72.1.16000.mp4');
     expect(handler(event6)).toEqual(event6.request);
 
-    const event7 = event('/t/a/up/p1/p2/guid1/test.wav/72.1.16000.m4a');
+    const event7 = event('/t/a/up/p1/p2/guid1/test.wav/72.1.16000.mp4');
     expect(handler(event7)).toEqual(event7.request);
 
-    const event8 = event('/t/some.com/p1/p2/p3/p4/test.wav/72.1.16000.m4a');
+    const event8 = event('/t/some.com/p1/p2/p3/p4/test.wav/72.1.16000.mp4');
     expect(handler(event8)).toEqual(event8.request);
   });
 });
